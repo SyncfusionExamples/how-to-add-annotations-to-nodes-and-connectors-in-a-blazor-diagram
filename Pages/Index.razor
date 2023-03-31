@@ -1,0 +1,257 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Buttons
+
+<SfButton Content="Add Annotation" OnClick="@AddAnnotation"></SfButton>
+<SfButton Content="Update Annotation" OnClick="@UpdateAnnotation"></SfButton>
+<SfDiagramComponent @ref="@diagram" Height="600px" Width="1000px" Nodes="@nodes" Connectors="@connectors" />
+
+@code
+{
+    DiagramObjectCollection<Connector> connectors;
+    DiagramObjectCollection<Node> nodes;
+    SfDiagramComponent diagram;
+
+    private void UpdateAnnotation()
+    {
+        diagram.Nodes[1].Annotations[0].Content = "Read N";
+    }
+
+    private void AddAnnotation()
+    {
+        ShapeAnnotation annotation = new ShapeAnnotation { Content = "Odd number" };
+        (diagram.Nodes[3].Annotations as DiagramObjectCollection<ShapeAnnotation>).Add(annotation);
+    }
+
+    protected override void OnInitialized()
+    {
+        nodes = new DiagramObjectCollection<Node>();
+        Node node1 = new Node()
+            {
+                ID = "node1",
+                Width = 140,
+                Height = 40,
+                OffsetX = 440,
+                OffsetY = 80,
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Ellipse },
+                Style = new ShapeStyle() { Fill = "#6495ED" },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                {
+                    new ShapeAnnotation()
+                    {
+                         Content ="Start"
+                       //Hyperlink = new HyperlinkSettings()
+                       //{
+                       //    Url =   "https://www.syncfusion.com"                        
+                       //},
+                       
+                       
+                       
+                       // Margin = new DiagramThickness() {Top=10}
+                        //HorizontalAlignment = HorizontalAlignment.Left,
+                        //VerticalAlignment = VerticalAlignment.Top,
+                        //Offset = new DiagramPoint() { X=0, Y=0}
+
+                    }
+                }
+            };
+        nodes.Add(node1);
+
+        Node node2 = new Node()
+            {
+                ID="node2",
+                Width = 200,
+                Height = 40,
+                OffsetX = 440,
+                OffsetY = 180,
+                Style = new ShapeStyle() { Fill = "#6495ED" },
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Parallelogram },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                {
+                    new ShapeAnnotation()
+                    {
+                        Content ="Enter a variable",
+                        Style = new TextStyle()
+                        {
+                            Color="black",
+                            Bold = true,
+                            Italic = true,
+                            TextDecoration = TextDecoration.Underline,
+                            FontSize = 14,
+                            FontFamily = "TimesNewRoman"
+                        }
+                     }
+                }
+            };
+        nodes.Add(node2);
+
+        Node node3 = new Node()
+            {
+                ID = "node3",
+                Width = 160,
+                Height = 60,
+                OffsetX = 440,
+                OffsetY = 270,
+                Style = new ShapeStyle() { Fill = "#6495ED" },
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Diamond },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                {
+                    new ShapeAnnotation()
+                    {
+                        Content ="N divisible by 2"
+                    }
+                }
+            };
+        nodes.Add(node3);
+
+        Node node4 = new Node()
+            {
+                ID = "node4",
+                Width = 160,
+                Height = 40,
+                OffsetX = 700,
+                OffsetY = 270,
+                Style = new ShapeStyle() { Fill = "#6495ED" },
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                {
+                    new ShapeAnnotation()
+                    {
+                        Content ="Odd number",
+                        Style = new TextStyle()
+                        {
+                            Color="red",
+                            Bold = true,
+                            Italic = false,
+                            FontSize = 14,
+                            FontFamily = "TimesNewRoman"
+                        }
+                    }
+                }
+            };
+        nodes.Add(node4);
+
+        Node node5 = new Node()
+            {
+                ID = "node5",
+                Width = 160,
+                Height = 40,
+                OffsetX = 440,
+                OffsetY = 380,
+                Style = new ShapeStyle() { Fill = "#6495ED" },
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                {
+                    new ShapeAnnotation()
+                    {
+                        Content ="Even number",
+                        Style = new TextStyle()
+                        {
+                            Color="#006400",
+                            Bold = true,
+                            Italic = false,
+                            FontSize = 14,
+                            FontFamily = "TimesNewRoman"
+                        }
+                    }
+                }
+
+            };
+        nodes.Add(node5);
+        Node node6 = new Node()
+            {
+                ID = "node6",
+                Width = 140,
+                Height = 40,
+                OffsetX = 440,
+                OffsetY = 480,
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Ellipse },
+                Style = new ShapeStyle() { Fill = "#6495ED" },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                {
+                    new ShapeAnnotation()
+                    {
+                        Content ="End"
+                    }
+                }
+            };
+        nodes.Add(node6);
+        connectors = new DiagramObjectCollection<Connector>();
+        Connector connector = new Connector()
+            {
+                SourceID = "node1",
+                TargetID ="node2",
+                Style = new TextStyle() { StrokeColor = "#6495ED" },
+
+            };
+        connectors.Add(connector);
+        Connector connector1 = new Connector()
+            {
+                SourceID = "node2",
+                TargetID ="node3",
+                Style = new TextStyle()
+                {
+                    StrokeColor = "#6495ED"},
+
+            };
+        connectors.Add(connector1);
+        Connector connector2 = new Connector()
+            {
+                SourceID = "node3",
+                TargetID = "node4",
+                Style = new TextStyle() { 
+                    StrokeColor = "#6495ED",
+                    Color = "red",
+                    Bold = true,
+                    FontSize = 12,
+                    FontFamily = "TimesNewRoman"
+                },
+                Annotations = new DiagramObjectCollection<PathAnnotation>()
+                {
+                    new PathAnnotation
+                    {
+                        Content = "false",
+                        Alignment = AnnotationAlignment.Before,
+                        //Offset = 1,
+                        Displacement = new DiagramPoint() {X=10, Y=10}
+                    }
+                }
+            };
+        connectors.Add(connector2);
+          Connector connector3 = new Connector()
+            {
+                SourceID = "node3",
+                TargetID ="node5",
+                Style = new TextStyle() 
+                { 
+                    StrokeColor = "#6495ED",
+                    Color = "blue",
+                    Bold = true,
+                    FontSize = 12,
+                    FontFamily = "TimesNewRoman"
+                },
+                Annotations = new DiagramObjectCollection<PathAnnotation>()
+                {
+                    new PathAnnotation
+                    {
+                        Content = "true",
+                        Alignment = AnnotationAlignment.After,
+                        Displacement = new DiagramPoint() {X=10, Y=10},
+                        //SegmentAngle = true
+                        
+                    }
+                }
+            };
+        connectors.Add(connector3);
+        Connector connector4 = new Connector()
+            {
+                SourceID = "node5",
+                TargetID = "node6",
+                Style = new TextStyle() { StrokeColor = "#6495ED" }
+
+            };
+        connectors.Add(connector4);
+
+    }
+
+}
